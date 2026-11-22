@@ -1,8 +1,5 @@
 # LoRa AI Anti-Jamming & Adaptive Communication System
 
-> **ESP32 + SX1276 (RA-02) @ 433 MHz | Random Forest | ESP-NOW out-of-band control | Streamlit dashboard**
-
----
 
 ## What This Project Does
 
@@ -107,67 +104,7 @@ Both boards use the **same SPI pinout** for the RA-02 module:
 | 3.3 V | 3V3 | — |
 | GND | GND | — |
 
-> **Note:** The RA-02 is a 3.3 V module. Do not connect to 5 V. Both boards must share the same 433 MHz antenna band; they do **not** need to be physically close for ESP-NOW to work.
 
----
-
-## Running the Demo
-
-### 1 — Arduino setup
-
-1. Install the **Arduino-LoRa** library (`sandeepmistry/arduino-LoRa`) via Library Manager.
-2. Set Board → **ESP32 Dev Module**, Upload Speed 921600.
-3. Flash `firmware/transmitter/transmitter.ino` to the **standalone (battery) ESP32**.
-4. Flash `firmware/receiver/receiver.ino` to the **PC-connected ESP32** (COM4).
-
-### 2 — Python setup
-
-```bash
-cd dashboard
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-### 3 — Training the model (Tab 1)
-
-1. Click **▶ Start Collecting (COM4)** — packets stream in labelled `0` (normal).
-2. Press **BOOT on the Receiver** (or click **⚡ Turn Jammer ON**) to start emulated jamming — packets labelled `1`.
-3. Collect ≥ 20 samples of each label.
-4. Click **🧠 Train ML Model Now** — model is saved to `model/model.pkl` and persists across restarts.
-
-### 4 — Live detection (Tab 2)
-
-1. Click **▶ Start Live Detection**.
-2. Press BOOT on the Receiver → watch RSSI variance spike and packet loss jump.
-3. After 2 consecutive jammed packets the system autonomously hops to **433.75 MHz**.
-4. Click **🔄 Manual reset** to return to 433.00 MHz.
-
----
-
-## Repository Structure
-
-```
-├── firmware/
-│   ├── transmitter/transmitter.ino   # Flash to standalone (battery) ESP32
-│   └── receiver/receiver.ino         # Flash to PC-connected ESP32 (COM4)
-├── model/
-│   ├── train_model.py                # Standalone training script
-│   ├── simulate_jamming.py           # Python RF simulation (for reports)
-│   └── model.pkl                     # Pre-trained Random Forest (scikit-learn)
-├── dashboard/
-│   ├── app.py                        # Streamlit dashboard (run this)
-│   └── requirements.txt
-├── data/
-│   ├── signal_log.csv                # Representative recorded dataset
-│   └── DATA_DESCRIPTION.md
-└── docs/
-    ├── HARDWARE_NOTES.md
-    └── PLOTS_GUIDE.md
-```
-
----
 
 ## References
 

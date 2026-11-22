@@ -1,0 +1,23 @@
+# .gitignore — LoRa AI Anti-Jamming Project
+
+# Python virtual environments
+.venv/
+.venv-1/
+env/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Model backups (keep only the main model.pkl, not all timestamped backups)
+model/backups/
+ml/backups/
+
+# Streamlit internal
+.streamlit/
+
+# Windows / macOS junk
+Thumbs.db
+.DS_Store
